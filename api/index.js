@@ -1,11 +1,12 @@
 const express = require('express');
-const request = require('request');
+const fetch = require('node-fetch');
+const {pipeline} = require('stream');
+const {promisify} = require('util');
 const { google } = require('googleapis');
 
 require('dotenv').config();
 
 const app = require('express')();
-const port = 3000 || process.env.PORT;
 
 const service = google.people({
     version: "v1",
@@ -14,13 +15,16 @@ const service = google.people({
 
 
 app.get('/api', async (req, res) => {
-    const response = await service.people.get({
+    const googlePeopleResponse = await service.people.get({
         resourceName: `people/${req.query.account_id}`,
         personFields: 'photos',
     })
-    // remove #=s100 to get the original file size.
-    const photoUrl = response.data.photos[0].url.split('=')[0];
-    request(photoUrl).pipe(res);
+    const rawPhotoUrl = googlePeopleResponse.data.photos[0].url;
+    // When use_original is 1, remove #=s100 to get the original file size.
+    const photoUrl = req.query.use_original == '1' ? rawPhotoUrl.split('=')[0] : rawPhotoUrl;
+    const streamPipeline = promisify(pipeline);
+    const photoResponse = await fetch(photoUrl);
+    streamPipeline(photoResponse.body, res);
 });
 
 module.exports = app;
