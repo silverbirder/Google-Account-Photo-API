@@ -1,0 +1,26 @@
+{
+  "name": "google-profile-image-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silver-birder/Google-Profile-Image-API.git"
+  },
+  "keywords": [],
+  "author": "silverbirder <silverbirder@gmail.com> (https://silver-birder.github.io/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Silver-birder/Google-Profile-Image-API/issues"
+  },
+  "homepage": "https://github.com/Silver-birder/Google-Profile-Image-API#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "googleapis": "^92.0.0",
+    "request": "^2.88.2"
+  }
+}
