@@ -13,7 +13,6 @@ const service = google.people({
     auth: process.env.API_KEY
 });
 
-
 app.get('/api', async (req, res) => {
     const googlePeopleResponse = await service.people.get({
         resourceName: `people/${req.query.account_id}`,
